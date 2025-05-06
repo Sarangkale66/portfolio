@@ -1,9 +1,10 @@
-import LoadComponent from "@/component/LoadComponent"
+import LoadComponent from "@/components/LoadComponent"
+import HomePage from "@/pages/HomePage";
 
 export default async function Home() {
   return (
     <LoadComponent>
-        Home
+      <HomePage/>
     </LoadComponent>
   );
 }

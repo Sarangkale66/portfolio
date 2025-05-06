@@ -1,9 +1,11 @@
 'use client'
 import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from 'gsap';
 import { createContext, useContext, ReactNode, useRef, RefObject } from 'react'
 
 gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger)
 
 type loadingRefType = HTMLDivElement|null
 
@@ -21,7 +23,6 @@ export default function ThemeProvider ({ children }: { children: ReactNode }){
   const pageRef = useRef<loadingRefType>(null);
   
   const LoadingScreenDown = ()=>{
-    pageRef.current?.classList.add("pointer-events-none")
     gsap.to(loadingRef.current,{
       delay:2.5,
       translateY:"100%",
@@ -30,7 +31,6 @@ export default function ThemeProvider ({ children }: { children: ReactNode }){
   }
   
   const LoadingScreenUp = ()=>{
-    pageRef.current?.classList.remove("pointer-events-none")
     gsap.to(loadingRef.current,{
       translateY:"0%",
       duration:0.5,
@@ -38,7 +38,12 @@ export default function ThemeProvider ({ children }: { children: ReactNode }){
   }
 
   useGSAP(() => {
-    LoadingScreenUp();
+    // LoadingScreenUp();
+    gsap.set(pageRef.current,{
+      ScrollTrigger:{
+        marker:true
+      }
+    })
   },[]);
  
   return (

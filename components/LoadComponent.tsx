@@ -1,5 +1,5 @@
 "use client"
-import { useTheme } from "@/component/ContextAPI";
+import { useTheme } from "@/components/ContextAPI";
 import React, { useEffect } from "react";
 
 export default function({ children }: Readonly<{ children: React.ReactNode; }>){
@@ -7,7 +7,7 @@ export default function({ children }: Readonly<{ children: React.ReactNode; }>){
     useEffect(()=>{
       LoadingScreenDown();
     },[]);
-  return <div className="h-full w-full bg-slate-200 text-black">
-        { children }
-      </div> 
+  return <>
+   { children }
+  </>
 }
