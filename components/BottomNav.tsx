@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useTheme } from "./ContextAPI";
 import { usePathname, useRouter } from "next/navigation";
 
-
 interface RouteHandler {
   id:string;
   name:string;
@@ -37,12 +36,11 @@ export default function BottomNav () {
       <div className="min-w-1/12 h-full border-r-white border-r-2 flex items-center justify-evenly bg-zinc-900 border-border border rounded-bl-full rounded-tl-full">
       <div>
         <div id="/" onClick={handleRoute} className=" w-[75px] h-[75px] relative transition-transform hover:scale-110 duration-200 min-w-10 z-30 rounded-full">
-          {/* <img src="/SankLogo.svg" className="h-full w-full"/> */}
           <Image
             src="/SankLogo.svg"
             fill
             className="object-contain h-full w-full"
-            alt="Sank Logo"
+            alt="Sank Logo"   
           />
         </div>
       </div>

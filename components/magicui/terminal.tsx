@@ -106,7 +106,7 @@ export const Terminal = ({ children, className }: TerminalProps) => {
       </div>
       <div
         className={cn(
-          "z-0 h-full relative min-h-100 max-h-72 overflow-y-scroll max-w-screen min-w-[300px] md:min-w-[500px] rounded-b-sm border border-border bg-background",
+          "z-0 h-full relative min-h-100 max-h-72 overflow-y-scroll max-w-screen min-w-full md:min-w-[500px] rounded-b-sm border border-border bg-background",
           className,
         )}
         >
