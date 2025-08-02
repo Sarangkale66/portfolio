@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import BottomNav from "@/components/BottomNav";
 import ThemeProvider from "@/components/ContextAPI";
 import LoadingPage from "@/components/LoadingPage";
+import BottomNav from "@/components/BottomNav";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import { SmoothScrolling } from "@/components/SmoothScrolling";
 
 export const metadata: Metadata = {
   title: "Sarang Kale",
@@ -17,16 +18,16 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html lang="en" data-lenis>
       <body
-        className={`relative`}
+        className={``}
       >
-          <SmoothCursor/>
-          <ThemeProvider>
-          <LoadingPage/>
-          <BottomNav/>
+        <SmoothCursor />
+        <ThemeProvider>
           {children}
-          </ThemeProvider>
+          {/* <LoadingPage /> */}
+          <BottomNav />
+        </ThemeProvider>
       </body>
     </html>
   );

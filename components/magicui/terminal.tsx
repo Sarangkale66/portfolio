@@ -2,30 +2,34 @@
 
 import { cn } from "@/lib/utils";
 import { motion, MotionProps } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import React, { forwardRef, RefObject, useEffect, useRef, useState } from "react";
 
 interface AnimatedSpanProps extends MotionProps {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  onComplete?:()=>void;
 }
 
 export const AnimatedSpan = ({
   children,
   delay = 0,
   className,
+  onComplete,
   ...props
-}: AnimatedSpanProps) => (
-    <motion.span
+}: AnimatedSpanProps) => {
+   return ( <motion.span
       initial={{ opacity: 0, y: -5 }}
       animate={{ opacity: 1, y: 0 }}
+      onAnimationComplete={onComplete}
       transition={{ duration: 0.3, delay: delay / 1000 }}
-      className={cn("grid text-sm font-normal tracking-tight", className)}
+      className={cn("text-sm font-normal tracking-tight inline-grid", className)}
       {...props}
       >
       {children}
     </motion.span>
-);
+)
+}
 
 interface TypingAnimationProps extends MotionProps {
   children: string;
@@ -96,53 +100,29 @@ interface TerminalProps {
   className?: string;
 }
 
-export const Terminal = ({ children, className }: TerminalProps) => {
-  return (
-    <div className="flex z-30 flex-col bg-background gap-y-2 border-b border-border p-4">
-      <div className="flex flex-row gap-x-2">
-        <div className="h-2 w-2 rounded-full bg-orange-500"></div>
-        <div className="h-2 w-2 rounded-full bg-slate-300"></div>
-        <div className="h-2 w-2 rounded-full bg-green-500"></div>
-      </div>
-      <div
-        className={cn(
-          "z-0 h-full relative min-h-100 max-h-72 overflow-y-scroll max-w-screen min-w-full md:min-w-[500px] rounded-b-sm border border-border bg-background",
-          className,
-        )}
+export const Terminal = forwardRef<HTMLDivElement, TerminalProps>(
+  ({ children, className }, ref) => {
+    return (
+      <div className="flex z-30 flex-col bg-background gap-y-2 border-b border-border p-4 pointer-events-auto">
+        <div className="flex flex-row gap-x-2">
+          <div className="h-2 w-2 rounded-full bg-orange-500"></div>
+          <div className="h-2 w-2 rounded-full bg-slate-300"></div>
+          <div className="h-2 w-2 rounded-full bg-green-500"></div>
+        </div>
+        <div
+          ref={ref}
+          className={cn(
+            "z-0 h-full relative min-h-100 max-h-72 overflow-y-scroll max-w-screen min-w-full md:min-w-[500px] rounded-b-sm border border-border bg-background",
+            className,
+          )}
         >
-        <pre className="p-4">
-          <code className="grid gap-y-1 overflow-auto">{children}</code>
-        </pre> 
+          <pre className="p-4">
+            <code className="grid gap-y-1 overflow-auto">{children}</code>
+          </pre>
+        </div>
       </div>
-  </div>
-  );
-};
+    );
+  }
+);
 
-const TerminalUse = ()=>{
-  const lines = `sarang
-    ├── project
-    ├── skills
-    │   ├── hard skill
-    │   └── soft skill
-    ├── winnings
-    │   └── hackthons
-    ├── contact
-    └── resume`;
-  const delay=1000;
-  const time = 1000+delay;
-
-  return <>
-    <Terminal> 
-      <span className="flex text-md">@root123~ <TypingAnimation delay={delay}  className="mt-[1.5px] ">ls</TypingAnimation></span> 
-      <span><AnimatedSpan className="text-blue-500 font-extrabold" delay={time}>app bin root sarang trash</AnimatedSpan></span>   
-      <span className="flex">
-      <AnimatedSpan className="font-bold text-md" delay={time}>@root123~ </AnimatedSpan>
-      <TypingAnimation className="mt-[1.5px]" delay={time*2}>cd sarang</TypingAnimation>
-      </span>
-      <AnimatedSpan  delay={time*3}>{lines}</AnimatedSpan>
-      <AnimatedSpan className="font-bold text-md" delay={(time-700)*5}>@root123~ </AnimatedSpan>
-    </Terminal>
-  </>
-}
-
-export default TerminalUse;
+Terminal.displayName = "Terminal";

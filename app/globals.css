@@ -9,6 +9,7 @@
   font-weight: 600;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'MyFont1';
   src: url('/fonts/LeGenoss.woff2') format('woff2');
@@ -19,27 +20,78 @@
 .font-myfont {
   font-family: 'MyFont', sans-serif;
 }
+
 .font-myfont-1 {
   font-family: 'MyFont1', sans-serif;
 }
 
-.text-stroke{
+.text-stroke {
   -webkit-text-stroke: 1.2px rgb(255, 255, 255)
 }
 
-@media (width >= 48rem) {
-  .text-stroke{
+.notion-code,
+.notion-collection {
+  overflow-x: auto;
+}
+
+.shiny-text {
+  color: #d1d1d1;
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 1) 35%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 1) 65%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: -100%;
+  }
+}
+
+.shiny-text.disabled {
+  animation: none;
+}
+
+@media (width >=48rem) {
+  .text-stroke {
     -webkit-text-stroke: 3px rgb(255, 255, 255)
   }
 }
- *{
-  box-sizing: border-box;
- }
 
-body,html{
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
   height: 100vh;
   width: 100vw;
   cursor: url('/cursor/cursor.png');
+  background-color: black;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.notion-collection-column-title-body {
+  color: white;
+}
+
+#scrollbar1::-webkit-scrollbar {
+  display: none;
 }
 
 @theme inline {
@@ -79,41 +131,52 @@ body,html{
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-meteor: meteor 5s linear infinite;
+
   @keyframes meteor {
-  0% {
-    transform: rotate(var(--angle)) translateX(0);
-    opacity: 1;
+    0% {
+      transform: rotate(var(--angle)) translateX(0);
+      opacity: 1;
     }
-  70% {
-    opacity: 1;
+
+    70% {
+      opacity: 1;
     }
-  100% {
-    transform: rotate(var(--angle)) translateX(-500px);
-    opacity: 0;
+
+    100% {
+      transform: rotate(var(--angle)) translateX(-500px);
+      opacity: 0;
     }
   }
+
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear
-;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
   @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
     }
   }
+
   @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
+    0% {
+      transform: translateZ(0) rotate(0);
     }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
+
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
     }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
+
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
     }
-  100% {
-    transform: translateZ(0) rotate(360deg);
+
+    100% {
+      transform: translateZ(0) rotate(360deg);
     }
-  }}
+  }
+}
 
 :root {
   --radius: 0.625rem;
@@ -188,6 +251,7 @@ body,html{
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

@@ -6,21 +6,38 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "rm": "rm -rf node_modules .next && npm install"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@gsap/react": "^2.1.2",
+    "@mui/icons-material": "^7.2.0",
+    "@mui/material": "^7.2.0",
+    "@notionhq/client": "^3.1.3",
+    "@studio-freight/react-lenis": "^0.0.47",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.9.7",
     "gsap": "^3.13.0",
+    "katex": "^0.16.22",
+    "lenis": "^1.3.8",
+    "lqip-modern": "^2.2.1",
+    "lru-cache": "^11.1.0",
     "lucide-react": "^0.507.0",
     "motion": "^12.9.7",
     "next": "15.3.1",
+    "notion-client": "^7.4.2",
+    "notion-types": "^7.4.2",
+    "notion-utils": "^7.4.2",
+    "prismjs": "^1.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-notion-x": "^7.4.2",
     "swiper": "^11.2.6",
-    "tailwind-merge": "^3.2.0"
+    "tailwind-merge": "^3.2.0",
+    "tempus": "^1.0.0-dev.12"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -33,5 +50,14 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.2.9",
     "typescript": "^5"
+  },
+  "overrides": {
+    "react-lazy-images": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "react-intersection-observer": {
+      "react": "^18.2.0"
+    }
   }
 }
