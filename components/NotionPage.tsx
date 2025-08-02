@@ -37,7 +37,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export default function NotionPage({ recordMap, loading }: { recordMap: any; loading: boolean; }) {
+// @ts-expect-error "record map type is not defined"
+export default function NotionPage({ recordMap }) {
   if (!recordMap) return null
 
   return (

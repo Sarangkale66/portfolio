@@ -1,6 +1,4 @@
 "use client";
-
-import { ReactLenis } from "@studio-freight/react-lenis";
 import React from "react";
 
 interface SmoothScrolling {

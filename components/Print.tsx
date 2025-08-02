@@ -1,11 +1,10 @@
 'use client';
 
-import { Dispatch, RefObject, SetStateAction, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import { useTheme } from './ContextAPI';
 
 export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: string[]; icon?: string; targetRef: RefObject<null | HTMLDivElement>; headerRef: RefObject<null | HTMLDivElement>; iconRef: RefObject<null | HTMLDivElement> }) {
   const { LoadingScreenDown } = useTheme();
-  let opened = false;
 
   async function ImageInserter(arr: string[]) {
     const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('.medium-zoom-image');
@@ -55,7 +54,6 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
   }
 
   useEffect(() => {
-    if (opened) return;
     ImageInserter(arr);
 
     document.querySelectorAll('details').forEach((e) => (e.open = true));
@@ -81,7 +79,6 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
     if (body) body.style.overflowX = "hidden";
 
     const links = document.querySelectorAll(".notion-page-link") as NodeListOf<HTMLAnchorElement>;
-    let count: number = 1;
     if (links) {
       links.forEach((link) => {
         if (link) {
@@ -107,13 +104,13 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
     });
 
 
-    let BgPage = document.querySelector(".notion-app") as HTMLDivElement;
+    const BgPage = document.querySelector(".notion-app") as HTMLDivElement;
     if (BgPage) {
       BgPage.style.background = "#191919";
       BgPage.style.color = "rgb(188 188 188)";
     }
 
-    let BgPage2 = document.querySelector(".notion-page") as HTMLDivElement;
+    const BgPage2 = document.querySelector(".notion-page") as HTMLDivElement;
     if (BgPage2) {
       BgPage2.style.padding = "0px 5vh";
       BgPage2.style.fontSize = "19px";
@@ -122,7 +119,7 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
       BgPage2.style.fontFamily = "ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI Variable Display', 'Segoe UI', Helvetica, Apple Color Emoji, Arial, sans-serif, Segoe UI Emoji, Segoe UI Symbol";
     }
 
-    let CodeBlock = document.querySelectorAll(".notion-code-copy-button") as NodeListOf<HTMLPreElement>;
+    const CodeBlock = document.querySelectorAll(".notion-code-copy-button") as NodeListOf<HTMLPreElement>;
     if (CodeBlock) {
       CodeBlock.forEach(block => {
         if (block) block.style.display = "none";
@@ -146,10 +143,6 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
 
     LoadingScreenDown();
 
-    setTimeout(() => {
-      opened = true;
-    }, 1000);
-
     const icon1 = document.querySelector(".notion-page-icon-hero") as HTMLDivElement;
     const iconImg = document.querySelector(".notion-page-icon") as HTMLImageElement;
     if (iconImg) iconImg.src = icon || "";
@@ -160,7 +153,7 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
       iconRef.current?.appendChild(clone);
       icon1.remove();
     }
-  }, []);
+  }, [LoadingScreenDown, arr, headerRef, icon, iconRef, targetRef]);
 
   return null;
 }

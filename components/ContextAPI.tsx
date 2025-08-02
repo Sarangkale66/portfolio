@@ -2,13 +2,13 @@
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from 'gsap';
-import { createContext, useContext, ReactNode, useRef, RefObject, useEffect, useState } from 'react'
+import { createContext, useContext, ReactNode, useRef, RefObject, useState } from 'react'
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger)
 
 type loadingRefType = HTMLDivElement | null
-type terminalRefType = HTMLPreElement | null;
+// type terminalRefType = HTMLPreElement | null;
 
 interface ThemeContextType {
   loadingRef: RefObject<loadingRefType>;

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useTheme } from "./ContextAPI";
 import { usePathname, useRouter } from "next/navigation";
-import { SparklesText } from "./magicui/sparkles-text";
+// import { SparklesText } from "./magicui/sparkles-text";
 
 interface RouteHandler {
   id: string;
@@ -19,7 +19,7 @@ const RouteHandler = ({
 }
 
 export default function BottomNav() {
-  const { LoadingScreenUp, LoadingScreenDown } = useTheme();
+  const { LoadingScreenUp } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
 

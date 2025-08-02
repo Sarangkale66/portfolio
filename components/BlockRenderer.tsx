@@ -1,12 +1,13 @@
 // ... existing imports
 import { BlockObjectResponse, RichTextItemResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const renderRichText = (richTextArr: Array<RichTextItemResponse>) => {
   return richTextArr.map((textItem, index) => {
     const { annotations, plain_text, href } = textItem;
-    let content:any = plain_text;
+    let content: React.ReactElement<unknown, string> = <>{plain_text}</>;
 
     if (annotations.bold) content = <strong>{content}</strong>;
     if (annotations.italic) content = <em>{content}</em>;
@@ -53,7 +54,7 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
       );
     case 'image':
       const imgSrc = block.image.type === 'external' ? block.image.external.url : block.image.file.url;
-      return <img src={imgSrc} alt="Notion Image" />;
+      return <Image src={imgSrc} alt="Notion Image" />;
     case 'code':
       return (
         <pre>

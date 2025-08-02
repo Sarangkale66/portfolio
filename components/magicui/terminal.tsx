@@ -2,13 +2,13 @@
 
 import { cn } from "@/lib/utils";
 import { motion, MotionProps } from "motion/react";
-import React, { forwardRef, RefObject, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 interface AnimatedSpanProps extends MotionProps {
   children: React.ReactNode;
   delay?: number;
   className?: string;
-  onComplete?:()=>void;
+  onComplete?: () => void;
 }
 
 export const AnimatedSpan = ({
@@ -18,17 +18,17 @@ export const AnimatedSpan = ({
   onComplete,
   ...props
 }: AnimatedSpanProps) => {
-   return ( <motion.span
-      initial={{ opacity: 0, y: -5 }}
-      animate={{ opacity: 1, y: 0 }}
-      onAnimationComplete={onComplete}
-      transition={{ duration: 0.3, delay: delay / 1000 }}
-      className={cn("text-sm font-normal tracking-tight inline-grid", className)}
-      {...props}
-      >
-      {children}
-    </motion.span>
-)
+  return (<motion.span
+    initial={{ opacity: 0, y: -5 }}
+    animate={{ opacity: 1, y: 0 }}
+    onAnimationComplete={onComplete}
+    transition={{ duration: 0.3, delay: delay / 1000 }}
+    className={cn("text-sm font-normal tracking-tight inline-grid", className)}
+    {...props}
+  >
+    {children}
+  </motion.span>
+  )
 }
 
 interface TypingAnimationProps extends MotionProps {

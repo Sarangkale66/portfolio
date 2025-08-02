@@ -3,10 +3,11 @@ import { RefObject, use, useEffect, useRef, useState } from 'react'
 import NotionPage from '../../../components/NotionPage'
 import { getImageSrcs, getNotionPageRecordMap } from '@/lib/notion'
 import { Print } from '@/components/Print'
+import { ExtendedRecordMap } from 'notion-types'
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [recordMap, setRecordMap] = useState<any>(null)
+  const [recordMap, setRecordMap] = useState<ExtendedRecordMap | null>(null)
   const [arr, setArr] = useState<string[]>([]);
   const [icon, setIcon] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -18,9 +19,9 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
       try {
         setLoading(true)
         const data = await getNotionPageRecordMap(id);
-        const [icon1, imageSrcArray]: any = await getImageSrcs(id);
-        setIcon(icon1);
-        setArr(imageSrcArray)
+        const arr1: (string | string[] | null)[] = await getImageSrcs(id);
+        setIcon(arr1[0] as string);
+        setArr(arr1[1] as string[]);
         setRecordMap(data)
       } catch (err) {
         if (!recordMap) {
@@ -33,7 +34,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     }
 
     fetchRecordMap()
-  }, [id])
+  }, [id, recordMap])
 
   return (
     <div className="!overflow-hidden w-[100%] h-full flex justify-center ">
@@ -74,7 +75,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
               <span className="sr-only">Loading...</span>
             </div>
           </div>) : (<>
-            <NotionPage recordMap={recordMap} loading={loading} />
+            <NotionPage recordMap={recordMap} />
             <Print arr={arr} icon={icon} targetRef={targetRef} headerRef={headerRef} iconRef={iconRef} />
           </>)
         }

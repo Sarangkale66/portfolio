@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ContextAPI";
-import LoadingPage from "@/components/LoadingPage";
+// import LoadingPage from "@/components/LoadingPage";
 import BottomNav from "@/components/BottomNav";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
-import { SmoothScrolling } from "@/components/SmoothScrolling";
+// import { SmoothScrolling } from "@/components/SmoothScrolling";
 
 export const metadata: Metadata = {
   title: "Sarang Kale",
