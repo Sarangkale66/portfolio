@@ -34,7 +34,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     }
 
     fetchRecordMap()
-  }, [id, recordMap])
+  }, [])
 
   return (
     <div className="!overflow-hidden w-[100%] h-full flex justify-center ">

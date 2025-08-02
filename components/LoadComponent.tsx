@@ -54,7 +54,7 @@ export default function LoadComponent({ children }: Readonly<{ children: React.R
   useEffect(() => {
     const path: string = pathname || " ";
     addNewLine(path);
-  }, [pathname, addNewLine]);
+  }, []);
 
   return <>
     {children}

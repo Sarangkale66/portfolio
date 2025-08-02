@@ -153,7 +153,7 @@ export function Print({ arr, icon, targetRef, headerRef, iconRef }: { arr: strin
       iconRef.current?.appendChild(clone);
       icon1.remove();
     }
-  }, [LoadingScreenDown, arr, headerRef, icon, iconRef, targetRef]);
+  }, []);
 
   return null;
 }

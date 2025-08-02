@@ -22,7 +22,7 @@ export default function Projects() {
       }).catch((error) => {
         console.error(error);
       });
-  }, [LoadingScreenDown]);
+  }, []);
 
   return (
     posts.length > 0 && (
