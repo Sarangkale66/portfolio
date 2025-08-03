@@ -1,7 +1,7 @@
 import LoadComponent from "@/components/LoadComponent";
 
-export default async function Blog(){
+export default async function Blog() {
   return <LoadComponent>
-    Blog
+    blog
   </LoadComponent>
 }

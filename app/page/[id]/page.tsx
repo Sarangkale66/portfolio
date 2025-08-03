@@ -1,27 +1,28 @@
 'use client'
 import { RefObject, use, useEffect, useRef, useState } from 'react'
 import NotionPage from '../../../components/NotionPage'
-import { getImageSrcs, getNotionPageRecordMap } from '@/lib/notion'
+import { getNotionPageRecordMap, getPageContent } from '@/lib/notion'
 import { Print } from '@/components/Print'
 import { ExtendedRecordMap } from 'notion-types'
+import { NotionAPI } from 'notion-client'
+import { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client'
+import Render from '@/components/BlockRender3'
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [recordMap, setRecordMap] = useState<ExtendedRecordMap | null>(null)
-  const [arr, setArr] = useState<string[]>([]);
-  const [icon, setIcon] = useState<string>("");
+  const notion = new NotionAPI()
+  const [recordMap, setRecordMap] = useState<(BlockObjectResponse | PartialBlockObjectResponse)[]>([])
   const [loading, setLoading] = useState(true);
   const targetRef: RefObject<null | HTMLDivElement> = useRef(null);
   const headerRef: RefObject<null | HTMLDivElement> = useRef(null);
   const iconRef: RefObject<null | HTMLDivElement> = useRef(null);
+
   useEffect(() => {
     const fetchRecordMap = async () => {
       try {
         setLoading(true)
-        const data = await getNotionPageRecordMap(id);
-        const arr1: (string | string[] | null)[] = await getImageSrcs(id);
-        setIcon(arr1[0] as string);
-        setArr(arr1[1] as string[]);
+        // const data = await getNotionPageRe(cordMap(id);
+        const data = await getPageContent(id);
         setRecordMap(data)
       } catch (err) {
         if (!recordMap) {
@@ -74,16 +75,13 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
               <div className="h-3 rounded-full bg-gray-700 md:max-w-[360px]"></div>
               <span className="sr-only">Loading...</span>
             </div>
-          </div>) : (<>
-            <NotionPage recordMap={recordMap} />
-            <Print arr={arr} icon={icon} targetRef={targetRef} headerRef={headerRef} iconRef={iconRef} />
-          </>)
+          </div>) : (<div className="" style={{ backgroundColor: "#191919" }}>
+            {<Render recordMap={recordMap} />}
+          </div>)
         }
       </div>
       <div className='w-[30%] lg:w-[25%] h-full bg-[#191919] text-white hidden sm:block  '>
-        <div ref={iconRef} className='py-5'>
-
-        </div>
+        <div ref={iconRef} className='py-5'></div>
         <div ref={headerRef} className='border-b-1'></div>
         <div ref={targetRef} className='py-3'></div>
       </div>

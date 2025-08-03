@@ -1,42 +1,36 @@
 "use server"
-
 import { Client } from "@notionhq/client";
-import { NotionAPI } from "notion-client";
-import { lruCache } from "./utils";
+// import { NotionAPI } from "notion-client";
+// import { lruCache } from "./utils";
 import {
-  GetPageResponse,
+  // GetPageResponse,
   BlockObjectResponse,
   PartialBlockObjectResponse,
   QueryDatabaseResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import { NotionAPI } from "notion-client";
 
 // Create Notion client
 const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 });
 
-// Create notion-client-X instance (unofficial)
-const notionXClient = new NotionAPI({
-  activeUser: process.env.NOTION_ACTIVE_USER,
-  authToken: process.env.NOTION_TOKEN_V2,
-});
+const notionXClient = new NotionAPI()
 
 /**
  * Fetches a full Notion recordMap using notion-client (unofficial API)
  */
 export async function getNotionPageRecordMap(pageId: string) {
   try {
-    const cacheKey = `page:${pageId}`;
-    const cached = lruCache.get(cacheKey);
-    if (cached) return cached;
-
-    console.log("caching happens");
-
+    // const cacheKey = page:${pageId};
+    // const cached = lruCache.get(cacheKey);
+    // if (cached) return cached;
+    // Create notion-client-X instance (unofficial)
     const recordMap = await notionXClient.getPage(pageId);
-    lruCache.set(cacheKey, recordMap);
+    // lruCache.set(cacheKey, recordMap);
     return recordMap;
   } catch (error) {
-    console.error(`Error fetching Notion page record map for ID ${pageId}:`, error);
+    console.error("Error fetching Notion page record map for ID ${pageId}:", error);
     return null;
   }
 }
@@ -44,42 +38,42 @@ export async function getNotionPageRecordMap(pageId: string) {
 /**
  * Gets the page icon and a list of image URLs inside the page
  */
-export async function getImageSrcs(
-  pageId: string
-): Promise<[string | null, string[]]> {
-  const page: GetPageResponse = await notion.pages.retrieve({ page_id: pageId });
+// export async function getImageSrcs(
+//   pageId: string
+// ): Promise<[string | null, string[]]> {
+//   const page: GetPageResponse = await notion.pages.retrieve({ page_id: pageId });
 
-  let icon: string | null = null;
-  if (page) { //@ts-expect-error may found error
-    if (page.icon) //@ts-expect-error may found error
-      if (page?.icon?.type === "emoji") { //@ts-expect-error may found error
-        icon = page?.icon?.emoji; //@ts-expect-error may found error
-      } else if (page?.icon?.type === "external") { //@ts-expect-error may found error
-        icon = page?.icon?.external?.url; //@ts-expect-error may found error
-      } else if (page?.icon?.type === "file") { //@ts-expect-error may found error
-        icon = page?.icon?.file.url;
-      }
-  }
+//   let icon: string | null = null;
+//   if (page) { //@ts-expect-error may found error
+//     if (page.icon) //@ts-expect-error may found error
+//       if (page?.icon?.type === "emoji") { //@ts-expect-error may found error
+//         icon = page?.icon?.emoji; //@ts-expect-error may found error
+//       } else if (page?.icon?.type === "external") { //@ts-expect-error may found error
+//         icon = page?.icon?.external?.url; //@ts-expect-error may found error
+//       } else if (page?.icon?.type === "file") { //@ts-expect-error may found error
+//         icon = page?.icon?.file.url;
+//       }
+//   }
 
-  const blocks = await notion.blocks.children.list({ block_id: pageId });
+//   const blocks = await notion.blocks.children.list({ block_id: pageId });
 
-  const imageSrcArray: string[] = [];
-  blocks.results.forEach((block) => {
-    if (
-      "type" in block &&
-      block.type === "image" &&
-      "image" in block
-    ) {
-      const imgSrc =
-        block.image.type === "external"
-          ? block.image.external.url
-          : block.image.file.url;
-      imageSrcArray.push(imgSrc);
-    }
-  });
+//   const imageSrcArray: string[] = [];
+//   blocks.results.forEach((block) => {
+//     if (
+//       "type" in block &&
+//       block.type === "image" &&
+//       "image" in block
+//     ) {
+//       const imgSrc =
+//         block.image.type === "external"
+//           ? block.image.external.url
+//           : block.image.file.url;
+//       imageSrcArray.push(imgSrc);
+//     }
+//   });
 
-  return [icon, imageSrcArray];
-}
+//   return [icon, imageSrcArray];
+// }
 
 /**
  * Returns list of blocks (basic page content)
