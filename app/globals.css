@@ -11,10 +11,33 @@
 }
 
 @font-face {
+  font-family: 'playwrite-head';
+  src: url('/fonts/PlaywriteAUQLD-Regular.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'inter-para';
+  src: url('/fonts/Inter_18pt-SemiBold.woff2') format('woff2');
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'MyFont1';
   src: url('/fonts/LeGenoss.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
+}
+
+.inter-para {
+  font-family: "inter-para", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.playwrite-head {
+  font-family: "playwrite-head", sans-serif;
+  font-optical-sizing: auto;
 }
 
 .font-myfont {
@@ -36,18 +59,16 @@
 
 .shiny-text {
   color: #d1d1d1;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 1) 35%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0) 50%,
-      rgba(255, 255, 255, 1) 65%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   display: inline-block;
-  animation: shine 4s linear infinite;
+  animation: shine 8.5s linear infinite;
+}
+
+.shiny-hover:hover {
+  background-position: -100%;
 }
 
 @keyframes shine {

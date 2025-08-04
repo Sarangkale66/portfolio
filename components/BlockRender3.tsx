@@ -8,6 +8,9 @@ import type {
   RichTextItemResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 import LoadingImage from './ImageLoading'
+import { Terminal } from "./magicui/terminal"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export interface BlockRendererProps {
   block: BlockObjectResponse | PartialBlockObjectResponse
@@ -23,14 +26,26 @@ const renderRichText = (richText: Array<RichTextItemResponse>) => {
     if (annotations.italic) element = <em className="italic">{element}</em>
     if (annotations.strikethrough) element = <s className="line-through">{element}</s>
     if (annotations.underline) element = <u className="underline">{element}</u>
-    if (annotations.code) element = <code className="bg-gray-100 text-sm px-1 rounded font-mono">{element}</code>
-    if (href) element = <Link href={href} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{element}</Link>
+    if (annotations.code) {
+      element = <code className="text-sm px-1 rounded font-mono">{element}</code>
+    }
+    if (href) {
+      element = (
+        <Link
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
+          {element}
+        </Link>
+      )
+    }
 
-    return <React.Fragment key={index}>{element}</React.Fragment>
+    return <React.Fragment key={`${index}-${plain_text}-${href || ''}`}>{element}</React.Fragment>
   })
 }
 
-// 🎯 Main Renderer Component
 const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
   if (!block || typeof block !== 'object' || !('type' in block)) return null
 
@@ -38,39 +53,35 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
 
   switch (type) {
     case 'paragraph':
-      return <p className="my-4 text-gray-800 leading-relaxed">{renderRichText(block.paragraph.rich_text)}</p>
+      return <p key={id} className="inter-para my-4 text-md leading-relaxed">{renderRichText(block.paragraph.rich_text)}</p>
 
     case 'heading_1':
-      return <h1 className="text-4xl font-extrabold my-6 text-gray-900">{renderRichText(block.heading_1.rich_text)}</h1>
+      return <h1 key={id} className="text-4xl font-extrabold my-6">{renderRichText(block.heading_1.rich_text)}</h1>
 
     case 'heading_2':
-      return <h2 className="text-3xl font-bold my-5 text-gray-800">{renderRichText(block.heading_2.rich_text)}</h2>
+      return <h2 key={id} className="text-3xl font-bold my-5">{renderRichText(block.heading_2.rich_text)}</h2>
 
     case 'heading_3':
-      return <h3 className="text-2xl font-semibold my-4 text-gray-700">{renderRichText(block.heading_3.rich_text)}</h3>
+      return <h3 key={id} className="inter-para text-2xl font-semibold my-4 dark:text-gray-300 text-black">{renderRichText(block.heading_3.rich_text)}</h3>
 
     case 'bulleted_list_item':
-      return <li className="list-disc ml-6 my-2 text-gray-800">{renderRichText(block.bulleted_list_item.rich_text)}</li>
+      return <li key={id} className="list-disc ml-6 my-2">{renderRichText(block.bulleted_list_item.rich_text)}</li>
 
     case 'numbered_list_item':
-      return <li className="list-decimal ml-6 my-2 text-gray-800">{renderRichText(block.numbered_list_item.rich_text)}</li>
+      return <li key={id} className="list-decimal ml-6 my-2">{renderRichText(block.numbered_list_item.rich_text)}</li>
 
     case 'to_do':
       return (
-        <div className="flex items-start gap-2 my-3">
+        <div key={id} className="flex items-start gap-2 my-3">
           <input type="checkbox" checked={block.to_do.checked} readOnly className="accent-blue-600 w-4 h-4 mt-1" />
-          <label className="text-gray-800">{renderRichText(block.to_do.rich_text)}</label>
+          <label>{renderRichText(block.to_do.rich_text)}</label>
         </div>
       )
 
     case 'image': {
-      const source =
-        block.image.type === 'external'
-          ? block.image.external.url
-          : block.image.file.url
-
+      const source = block.image.type === 'external' ? block.image.external.url : block.image.file.url
       return (
-        <div className="my-6 rounded overflow-hidden border border-gray-200 shadow-sm">
+        <div key={id} className="my-6 rounded overflow-hidden border border-gray-200 shadow-sm">
           <LoadingImage
             src={source}
             alt="Notion image"
@@ -84,48 +95,46 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
 
     case 'code':
       return (
-        <pre className="bg-gray-100 border border-gray-300 rounded p-4 overflow-x-auto text-sm font-mono my-4 text-gray-800 whitespace-pre-wrap">
-          <code>{renderRichText(block.code.rich_text)}</code>
-        </pre>
+        <Terminal key={id} className="rounded overflow-x-auto text-sm font-mono my-3 whitespace-pre-wrap !h-fit">
+          <SyntaxHighlighter language={block.code.language} style={oneDark}>
+            {block.code.rich_text.map(rt => rt.plain_text).join('')}
+          </SyntaxHighlighter>
+        </Terminal>
       )
 
     case 'callout':
       return (
-        <div className="flex items-start bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md my-4 shadow-sm">
+        <div key={id} className="flex items-start bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md my-4 shadow-sm">
           <div className="text-yellow-800">{renderRichText(block.callout.rich_text)}</div>
         </div>
       )
 
     case 'divider':
       return (
-        <div className="flex justify-center my-8">
-          <hr className="w-1/3 border-t border-gray-300 dark:border-gray-600" />
+        <div key={id} className="flex justify-center my-8">
+          <hr className="w-[60%] border-t dark:border-gray-300 border-gray-500" />
         </div>
       )
 
     case 'table': {
-      console.log(block);
-
       if (!block.has_children || !('children' in block)) {
-        return (
-          <p className="text-sm italic text-gray-500">⚠️ Table exists but has no rows (children not fetched).</p>
-        )
+        return <p key={id} className="text-sm italic text-gray-500">⚠️ Table exists but has no rows (children not fetched).</p>
       }
 
-      const rows = (block as any).children // assuming children are passed manually
+      const rows = (block as any).children
 
       return (
-        <table className="table-auto border-collapse w-full my-6 shadow rounded overflow-hidden">
+        <table key={id} className="table-auto border-collapse w-full my-6 shadow rounded overflow-hidden">
           <tbody>
-            {rows.map((row: any, rowIndex: number) => {
+            {rows.map((row: any) => {
               if (row.type !== 'table_row') return null
 
               return (
                 <tr key={row.id} className="border-t">
                   {row.table_row.cells.map((cell: any[], colIndex: number) => (
                     <td
-                      key={colIndex}
-                      className="border px-4 py-2 text-sm text-gray-800 bg-white"
+                      key={`${row.id}-${colIndex}`}
+                      className="border px-4 py-2 text-sm"
                     >
                       {renderRichText(cell)}
                     </td>
@@ -143,9 +152,11 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
       const childId = block.id
 
       return (
-        <div className="my-6 p-4 bg-gray-50 border border-gray-200 rounded hover:shadow transition-all duration-150">
-          <h3 className="text-xl font-medium">
-            <Link href={`/projects/${childId}`} className="text-blue-600 hover:underline">
+        <div key={id} className="my-3 w-fit hover:shadow transition-all duration-150">
+          <h3 className="text-md font-medium flex border-b-2 pb-1 hover:border-gray-50 border-transparent delay-50 transition-colors items-center gap-1">
+            <svg className='w-5 dark:block hidden' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M20 22H4C3.44772 22 3 21.5523 3 21V8H21V21C21 21.5523 20.5523 22 20 22ZM21 6H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V6ZM7 11V15H11V11H7ZM7 17V19H17V17H7ZM13 12V14H17V12H13Z"></path></svg>
+            <svg className='w-5 block dark:hidden' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M20 22H4C3.44772 22 3 21.5523 3 21V8H21V21C21 21.5523 20.5523 22 20 22ZM21 6H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V6ZM7 11V15H11V11H7ZM7 17V19H17V17H7ZM13 12V14H17V12H13Z"></path></svg>
+            <Link href={`/page/${childId}`} className="shiny-text dark:bg-[linear-gradient(120deg,_rgba(255,255,255,1)_35%,_rgba(255,255,255,1)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,1)_65%)] bg-[linear-gradient(135deg,_rgba(0,0,0,1)_40%,_rgba(0,0,0,0)_50%,_rgba(0,0,0,1)_60%)] hover:underline">
               {title}
             </Link>
           </h3>
@@ -155,7 +166,7 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
 
     default:
       return (
-        <p className="text-sm text-gray-400 italic my-2">
+        <p key={id} className="text-sm italic my-2">
           ⚠️ Unsupported block type: <code>{type}</code>
         </p>
       )

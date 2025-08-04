@@ -4,6 +4,7 @@ import ThemeProvider from "@/components/ContextAPI";
 // import LoadingPage from "@/components/LoadingPage";
 import BottomNav from "@/components/BottomNav";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import { ThemeProvider1 } from "@/components/ui/theme-provider"
 // import { SmoothScrolling } from "@/components/SmoothScrolling";
 
 export const metadata: Metadata = {
@@ -18,16 +19,22 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en" data-lenis>
+    <html lang="en" data-lenis suppressHydrationWarning>
       <body
         className={``}
       >
-        <SmoothCursor />
-        <ThemeProvider>
-          {children}
-          {/* <LoadingPage /> */}
-          <BottomNav />
-        </ThemeProvider>
+        <ThemeProvider1
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <ThemeProvider>
+            <SmoothCursor />
+            {children}
+            {/* <LoadingPage /> */}
+            {/* <BottomNav /> */}
+          </ThemeProvider>
+        </ThemeProvider1>
       </body>
     </html>
   );
