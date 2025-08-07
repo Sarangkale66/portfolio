@@ -1,6 +1,7 @@
 'use client'
-
-import React, { useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import clsx from 'clsx'
 
@@ -10,9 +11,10 @@ interface LoadingImageProps {
   width: number
   height: number
   className?: string
+  flag?: boolean;
 }
 
-const LoadingImage: React.FC<LoadingImageProps> = ({ src, alt, width, height, className }) => {
+const LoadingImage: React.FC<LoadingImageProps> = ({ src, alt, width, height, className, flag = false }) => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -28,26 +30,45 @@ const LoadingImage: React.FC<LoadingImageProps> = ({ src, alt, width, height, cl
 
       {error && (
         <div className="absolute inset-0 flex items-center justify-center text-red-500 text-sm z-10 bg-gray-100">
-          Failed to load
+          Failed to load try refreshing image
         </div>
       )}
-
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        onLoad={() => setLoading(false)}
-        onError={() => {
-          setLoading(false)
-          setError(true)
-        }}
-        className={clsx(
-          'transition-opacity duration-500',
-          loading || error ? 'opacity-0' : 'opacity-100',
-          'object-cover w-full h-auto'
-        )}
-      />
+      {!flag && <Zoom>
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          onLoad={() => setLoading(false)}
+          onError={() => {
+            setLoading(false)
+            setError(true)
+          }}
+          className={clsx(
+            'medium-zoom-image transition-opacity duration-500 w-64 dark:invert-0',
+            loading || error ? 'opacity-0' : 'opacity-100',
+            'object-cover w-full h-auto'
+          )}
+        />
+      </Zoom>}
+      {
+        flag && <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          onLoad={() => setLoading(false)}
+          onError={() => {
+            setLoading(false)
+            setError(true)
+          }}
+          className={clsx(
+            'medium-zoom-image transition-opacity duration-500 w-64 dark:invert-0',
+            loading || error ? 'opacity-0' : 'opacity-100',
+            'object-cover w-full h-auto'
+          )}
+        />
+      }
     </div>
   )
 }

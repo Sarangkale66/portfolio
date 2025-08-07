@@ -110,3 +110,13 @@ export async function getProjects(): Promise<
     title: page.properties.Title?.title?.[0]?.plain_text || 'Untitled',
   }));
 }
+
+export async function getPageProperties(pageId: string) {
+  const response = await notion.pages.retrieve({ page_id: pageId });
+  //@ts-expect-error may found error
+  const icon = response.icon?.type === 'emoji' ? response.icon.emoji : response.icon?.type === 'external' ? response.icon.external.url : response.icon?.type === 'file' ? response.icon.file.url : null;
+  //@ts-expect-error may found error
+  const cover = response.cover?.type === 'external' ? response.cover.external.url : response.cover?.type === 'file' ? response.cover.file.url : null;
+  //@ts-expect-error may found error
+  return { icon, cover, properties: response.properties, status: response.properties.Status.status.name, created: response.properties["created "].date, color: response.properties.Status.status.color };
+}

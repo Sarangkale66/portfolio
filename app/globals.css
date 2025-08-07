@@ -57,6 +57,12 @@
   overflow-x: auto;
 }
 
+details {
+  max-height: 4rem;
+  overflow: hidden;
+  transition: max-height 400ms ease-out;
+}
+
 .shiny-text {
   color: #d1d1d1;
   background-size: 200% 100%;
@@ -113,6 +119,10 @@ html {
 
 #scrollbar1::-webkit-scrollbar {
   display: none;
+}
+
+.react-medium-image-zoom-overlay {
+  background-color: transparent !important;
 }
 
 @theme inline {

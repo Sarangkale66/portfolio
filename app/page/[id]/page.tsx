@@ -1,16 +1,39 @@
 'use client'
 import { RefObject, use, useEffect, useRef, useState } from 'react'
 import NotionPage from '../../../components/NotionPage'
-import { getNotionPageRecordMap, getPageContent } from '@/lib/notion'
+import { getPageContent, getPageProperties } from '@/lib/notion'
 import { Print } from '@/components/Print'
 import { ExtendedRecordMap } from 'notion-types'
 import { BlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client'
 import Render from '@/components/BlockRender3'
 import ThemeToggleButton from '@/components/ui/theme-toggle-button'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
+import { TreeItem } from '@mui/x-tree-view/TreeItem';
+import Link from 'next/link'
+import LoadingImage from '@/components/ImageLoading'
+
+interface PageLinkType {
+  title?: string;
+  pageId?: string
+}
+
+interface PropertyTypes {
+  cover: string;
+  properties: any;
+  icon: string;
+  created: { start: string };
+  status: string;
+  color: string;
+}
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [recordMap, setRecordMap] = useState<(BlockObjectResponse | PartialBlockObjectResponse)[]>([])
+  const [property, setProperty] = useState<PropertyTypes>({ cover: "", properties: {}, icon: "", created: { start: "" }, status: "", color: "" });
   const [loading, setLoading] = useState(true);
   const targetRef: RefObject<null | HTMLDivElement> = useRef(null);
   const headerRef: RefObject<null | HTMLDivElement> = useRef(null);
@@ -20,8 +43,11 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
     const fetchRecordMap = async () => {
       try {
         setLoading(true)
+        const properties = await getPageProperties(id);
         const data = await getPageContent(id);
-        setRecordMap(data)
+        console.log(properties);
+        setProperty(properties);
+        setRecordMap(data);
       } catch (err) {
         if (!recordMap) {
           return <div className="text-center mt-10 text-red-500">Failed to load Notion data.</div>
@@ -41,7 +67,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
       </div>
       <div className='scrollbar overflow-y-scroll w-full sm:w-[70%] border-l-1 border-r-1 border-zinc-700 ' id='scrollbar1'>
         {loading ? (
-          <div className='md:flex w-[100%] h-full md:justify-center'>
+          <div className='md:flex w-[100%] h-full md:justify-center relative'>
             <div role="status" className=" animate-pulse h-full w-[100%] md:w-[100%] py-15 px-9 md:py-8 md:px-9">
               <div className='w-full z-50 fixed left-[75%]'>
                 <ThemeToggleButton />
@@ -75,18 +101,44 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
               <div className="h-3 rounded-full dark:bg-gray-700 bg-gray-300 md:max-w-[360px]"></div>
               <span className="sr-only">Loading...</span>
             </div>
-          </div>) : (<div className="px-10 py-10 bg-white dark:bg-[#191919] text-zinc-900 dark:text-white" >
-            <div className='w-fit rounded-sm z-50 fixed left-[85%] sm:left-[75%] bg-zinc-300 dark:bg-zinc-800'>
+          </div>) : (<div className="px-4 lg:px-10 py-10 bg-white dark:bg-[#191919] text-zinc-900 dark:text-white relative" >
+            <div className='w-fit rounded-sm z-50 fixed left-[88%] sm:left-[63%] lg:left-[78%] bg-zinc-300 dark:bg-zinc-800'>
               <ThemeToggleButton />
             </div>
-            {<Render recordMap={recordMap} />}
+            <Render recordMap={recordMap} />
+            {<Print targetRef={targetRef} headerRef={headerRef} iconRef={iconRef} />}
           </div>)
         }
       </div>
-      <div className='w-[30%] lg:w-[25%] h-full bg-white dark:bg-[#191919] text-zinc-900 dark:text-white hidden sm:block  '>
-        <div ref={iconRef} className='py-5'></div>
-        <div ref={headerRef} className='border-b-1'></div>
-        <div ref={targetRef} className='py-3'></div>
+      <div className='w-[30%] lg:w-[20%] h-full bg-white dark:bg-[#191919] text-zinc-900 dark:text-white hidden sm:block  '>
+        <div className='min-h-62'>
+          <div ref={iconRef} className='w-fit mx-auto py-5'>
+            {!property.icon && <div className="h-96 w-[50%] md:mt-5 rounded-sm bg-gray-700 dark:bg-gray-300"></div>}
+            {property.icon && <img src={property.icon} width={140} height={10} alt='icon' className='border border-zinc-400 rounded-md' />}
+          </div>
+          <div ref={headerRef} className='border-b-1 text-sm font-bold text-zinc-600 dark:text-zinc-300 px-5 py-3 flex flex-col gap-3'>
+            {property.created["start"] && <div className='flex justify-between'>
+              <p className='w-20'>Created_At</p>
+              <p>{property.created["start"]}</p>
+            </div>}
+            {property.status && <div className='flex justify-between'>
+              <p className='w-20'>Status</p>
+              <p className={`dark:bg-zinc-50 bg-zinc-800 dark:text-black text-white border-2 border-${property.color}-500 text-[12px] tracking-wider capitalize border-2 rounded-lg px-2`}><span className={`text-${property.color}-500 text-md`}>• </span>{property.status}</p>
+            </div>}
+          </div>
+        </div>
+        <div className='my-5 pl-5 relative'>
+          <input type="checkbox" id="toggle" className="peer hidden" />
+          {targetRef.current && <label htmlFor="toggle" className=" cursor-pointer mb-2 font-bold flex ">
+            <svg xmlns="http://www.w3.org/2000/svg" className='h-7' viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
+            <p className='shiny-text dark:bg-[linear-gradient(120deg,_rgba(255,255,255,1)_35%,_rgba(255,255,255,1)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,1)_65%)] bg-[linear-gradient(135deg,_rgba(0,0,0,1)_40%,_rgba(0,0,0,0)_50%,_rgba(0,0,0,1)_60%)] hover:underline'>Related Pages</p>
+          </label>}
+          <div
+            className="max-h-0 overflow-hidden transition-all duration-500 ease-in-out peer-checked:max-h-100"
+            ref={targetRef}
+          >
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -6,55 +6,63 @@ import { useTheme } from './ContextAPI';
 export function Print({ targetRef, headerRef, iconRef }: { targetRef: RefObject<null | HTMLDivElement>; headerRef: RefObject<null | HTMLDivElement>; iconRef: RefObject<null | HTMLDivElement> }) {
   const { LoadingScreenDown } = useTheme();
 
-  // async function ImageInserter(arr: string[]) {
-  // //   const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('.medium-zoom-image');
-  // //   if (images.length !== 0)
-  // //     images.forEach((img, i) => {
-  // //       const wrapper = img.parentElement;
-  // //       if (!wrapper || wrapper.querySelector('.skeleton-loader')) return;
+  // async function ImageInserter() {
+  //   // const images: NodeListOf<HTMLImageElement> = document.querySelectorAll('.medium-zoom-image');
+  //   // images.forEach((image: HTMLImageElement) => {
+  //   //   if (image.parentElement && image.parentElement.parentElement && image.parentElement.parentElement.parentElement && image.parentElement.parentElement.parentElement.parentElement) {
+  //   //     image.parentElement.parentElement.parentElement.parentElement.style.backgroundColor = "#191919";
+  //   //     console.log(image.parentElement.parentElement.parentElement);
 
-  // //       wrapper.style.position = 'relative';
-  // //       wrapper.style.minHeight = '25vh';
-  // //       wrapper.style.width = '100%';
+  //   //   }
+  //   // })
 
-  // //       img.style.opacity = '0';
-  // //       img.style.transition = 'opacity 0.5s ease-in';
+  //   //   if (images.length !== 0)
+  //   //     images.forEach((img, i) => {
+  //   //       const wrapper = img.parentElement;
+  //   //       if (!wrapper || wrapper.querySelector('.skeleton-loader')) return;
 
-  // //       img.src = arr[i];
+  //   //       wrapper.style.position = 'relative';
+  //   //       wrapper.style.minHeight = '25vh';
+  //   //       wrapper.style.width = '100%';
 
-  // //       const skeleton = document.createElement('div');
-  // //       skeleton.className =
-  // //         'skeleton-loader absolute top-0 left-0 w-full h-full z-10 animate-pulse flex items-center justify-center bg-gray-300 dark:bg-gray-700';
+  //   //       img.style.opacity = '0';
+  //   //       img.style.transition = 'opacity 0.5s ease-in';
 
-  // //       skeleton.innerHTML = `
-  // //         <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-  // //           <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-  // //         </svg>
-  // //       `;
-  // //       wrapper.appendChild(skeleton);
+  //   //       img.src = arr[i];
 
-  // //       const onLoad = () => {
-  // //         img.style.opacity = '1';
-  // //         setTimeout(() => {
-  // //           skeleton.remove();
-  // //         }, 100);
-  // //       };
+  //   //       const skeleton = document.createElement('div');
+  //   //       skeleton.className =
+  //   //         'skeleton-loader absolute top-0 left-0 w-full h-full z-10 animate-pulse flex items-center justify-center bg-gray-300 dark:bg-gray-700';
 
-  // //       if (img.complete) {
-  // //         onLoad();
-  // //       } else {
-  // //         img.onload = onLoad;
-  // //         img.onerror = () => {
-  // //           skeleton.innerHTML = `<span class="text-red-500 text-sm">Failed to load</span>`;
-  // //         };
-  // //       }
+  //   //       skeleton.innerHTML = `
+  //   //         <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+  //   //           <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+  //   //         </svg>
+  //   //       `;
+  //   //       wrapper.appendChild(skeleton);
 
-  // //     });
+  //   //       const onLoad = () => {
+  //   //         img.style.opacity = '1';
+  //   //         setTimeout(() => {
+  //   //           skeleton.remove();
+  //   //         }, 100);
+  //   //       };
+
+  //   //       if (img.complete) {
+  //   //         onLoad();
+  //   //       } else {
+  //   //         img.onload = onLoad;
+  //   //         img.onerror = () => {
+  //   //           skeleton.innerHTML = `<span class="text-red-500 text-sm">Failed to load</span>`;
+  //   //         };
+  //   //       }
+
+  //   //     });
 
   // }
 
   useEffect(() => {
-    // ImageInserter(arr);
+    // ImageInserter();
 
     document.querySelectorAll('details').forEach((e) => (e.open = true));
 

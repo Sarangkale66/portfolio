@@ -9,8 +9,10 @@ import type {
 } from '@notionhq/client/build/src/api-endpoints'
 import LoadingImage from './ImageLoading'
 import { Terminal } from "./magicui/terminal"
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { oneDark, coldarkDark, prism, holiTheme, base16AteliersulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export interface BlockRendererProps {
   block: BlockObjectResponse | PartialBlockObjectResponse
@@ -27,7 +29,7 @@ const renderRichText = (richText: Array<RichTextItemResponse>) => {
     if (annotations.strikethrough) element = <s className="line-through">{element}</s>
     if (annotations.underline) element = <u className="underline">{element}</u>
     if (annotations.code) {
-      element = <code className="text-sm px-1 rounded font-mono">{element}</code>
+      element = <code className="text-md px-1 py-0.5 font-bold rounded font-mono italic text-orange-500 bg-zinc-200 dark:bg-zinc-700">{element}</code>
     }
     if (href) {
       element = (
@@ -96,7 +98,7 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
     case 'code':
       return (
         <Terminal key={id} className="rounded overflow-x-auto text-sm font-mono my-3 whitespace-pre-wrap !h-fit">
-          <SyntaxHighlighter language={block.code.language} style={oneDark}>
+          <SyntaxHighlighter language={block.code.language} style={oneDark} >
             {block.code.rich_text.map(rt => rt.plain_text).join('')}
           </SyntaxHighlighter>
         </Terminal>
@@ -152,17 +154,72 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
       const childId = block.id
 
       return (
-        <div key={id} className="my-3 w-fit hover:shadow transition-all duration-150">
-          <h3 className="text-md font-medium flex border-b-2 pb-1 hover:border-gray-50 border-transparent delay-50 transition-colors items-center gap-1">
-            <svg className='w-5 dark:block hidden' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M20 22H4C3.44772 22 3 21.5523 3 21V8H21V21C21 21.5523 20.5523 22 20 22ZM21 6H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V6ZM7 11V15H11V11H7ZM7 17V19H17V17H7ZM13 12V14H17V12H13Z"></path></svg>
-            <svg className='w-5 block dark:hidden' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M20 22H4C3.44772 22 3 21.5523 3 21V8H21V21C21 21.5523 20.5523 22 20 22ZM21 6H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V6ZM7 11V15H11V11H7ZM7 17V19H17V17H7ZM13 12V14H17V12H13Z"></path></svg>
-            <Link href={`/page/${childId}`} className="shiny-text dark:bg-[linear-gradient(120deg,_rgba(255,255,255,1)_35%,_rgba(255,255,255,1)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,1)_65%)] bg-[linear-gradient(135deg,_rgba(0,0,0,1)_40%,_rgba(0,0,0,0)_50%,_rgba(0,0,0,1)_60%)] hover:underline">
+        <div key={id} className="notion-page-link my-3 w-fit hover:shadow transition-all duration-150">
+          <h4 className="text-md font-medium flex pb-1 delay-0 transition-colors items-center gap-1">
+            <svg className="w-5 dark:block hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="url(#shinyWhite)">
+              <defs>
+                <linearGradient id="shinyWhite" x1="0%" y1="0%" x2="100%" y2="0%" >
+                  <stop offset="0%" stopColor="white" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="white" stopOpacity="0" />
+                  <stop offset="100%" stopColor="white" stopOpacity="0.8" />
+                  <animateTransform
+                    attributeName="gradientTransform"
+                    type="translate"
+                    from="-1 0"
+                    to="1 0"
+                    dur="7s"
+                    repeatCount="indefinite"
+                  />
+                </linearGradient>
+              </defs>
+              <path d="M5 8V20H19V8H5ZM5 6H19V4H5V6ZM20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM7 10H11V14H7V10ZM7 16H17V18H7V16ZM13 11H17V13H13V11Z"></path>
+            </svg>
+
+            <svg className="w-5 block dark:hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="url(#shinyBlack)">
+              <defs>
+                <linearGradient id="shinyBlack" x1="0%" y1="0%" x2="100%" y2="0%" gradientTransform="rotate(120, 0.5, 0.5) translate(-1 0)">
+                  <stop offset="0%" stopColor="black" stopOpacity="1" />
+                  <stop offset="50%" stopColor="black" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="black" stopOpacity="0.8" />
+                  <animateTransform
+                    attributeName="gradientTransform"
+                    type="translate"
+                    from="-1 0"
+                    to="1 0"
+                    dur="5s"
+                    repeatCount="indefinite"
+                  />
+                </linearGradient>
+              </defs>
+              <path d="M5 8V20H19V8H5ZM5 6H19V4H5V6ZM20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM7 10H11V14H7V10ZM7 16H17V18H7V16ZM13 11H17V13H13V11Z"></path>
+            </svg>
+            <Link href={`/page/${childId}`} className='text-zinc-600 font-bold dark:text-zinc-200 hover:underline'>
               {title}
             </Link>
-          </h3>
+          </h4>
         </div>
       )
     }
+
+    case 'toggle': {
+      return (
+        <details key={id} className="my-2 group">
+          <summary className="cursor-pointer hover:underline">
+            {renderRichText(block.toggle?.rich_text || [])}
+          </summary>
+          <div className="ml-4 mt-2">
+            {'children' in block && Array.isArray(block.children) ? (
+              block.children.map(childBlock => (
+                <Render key={childBlock.id} recordMap={childBlock} />
+              ))
+            ) : (
+              <p className="text-sm italic text-gray-500">⚠️ Toggle has no children or not fetched.</p>
+            )}
+          </div>
+        </details>
+      )
+    }
+
 
     default:
       return (
