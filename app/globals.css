@@ -109,10 +109,6 @@ html {
   background-color: black;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 .notion-collection-column-title-body {
   color: white;
 }

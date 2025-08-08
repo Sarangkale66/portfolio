@@ -28,12 +28,13 @@ interface PropertyTypes {
   created: { start: string };
   status: string;
   color: string;
+  deadline: { start: string };
 }
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [recordMap, setRecordMap] = useState<(BlockObjectResponse | PartialBlockObjectResponse)[]>([])
-  const [property, setProperty] = useState<PropertyTypes>({ cover: "", properties: {}, icon: "", created: { start: "" }, status: "", color: "" });
+  const [property, setProperty] = useState<PropertyTypes>({ cover: "", properties: {}, icon: "", created: { start: "" }, status: "", color: "", deadline: { start: "" } });
   const [loading, setLoading] = useState(true);
   const targetRef: RefObject<null | HTMLDivElement> = useRef(null);
   const headerRef: RefObject<null | HTMLDivElement> = useRef(null);
@@ -69,7 +70,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         {loading ? (
           <div className='md:flex w-[100%] h-full md:justify-center relative'>
             <div role="status" className=" animate-pulse h-full w-[100%] md:w-[100%] py-15 px-9 md:py-8 md:px-9">
-              <div className='w-full z-50 fixed left-[75%]'>
+              <div className='w-full z-50 fixed fixed left-[88%] sm:left-[63%] lg:left-[78%]'>
                 <ThemeToggleButton />
               </div>
               <div className="h-10 md:h-13 w-[80%] md:mt-5 rounded-sm dark:bg-gray-700 bg-gray-300 mb-9"></div>
@@ -111,15 +112,31 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         }
       </div>
       <div className='w-[30%] lg:w-[20%] h-full bg-white dark:bg-[#191919] text-zinc-900 dark:text-white hidden sm:block  '>
-        <div className='min-h-62'>
+        <div className='text-[8px] lg:text-sm'>
           <div ref={iconRef} className='w-fit mx-auto py-5'>
-            {!property.icon && <div className="h-96 w-[50%] md:mt-5 rounded-sm bg-gray-700 dark:bg-gray-300"></div>}
-            {property.icon && <img src={property.icon} width={140} height={10} alt='icon' className='border border-zinc-400 rounded-md' />}
+            {property.icon && (
+              typeof property.icon === 'string' && property.icon.startsWith('http')
+                ? (
+                  <img
+                    src={property.icon}
+                    width={140}
+                    alt="icon"
+                    className="border border-zinc-400 rounded-md object-contain"
+                  />
+                )
+                : (
+                  <span className="text-6xl">{property.icon}</span>
+                )
+            )}
           </div>
-          <div ref={headerRef} className='border-b-1 text-sm font-bold text-zinc-600 dark:text-zinc-300 px-5 py-3 flex flex-col gap-3'>
+          <div ref={headerRef} className='border-b-1 font-bold text-zinc-600 dark:text-zinc-300 px-5 py-3 flex flex-col gap-3'>
             {property.created["start"] && <div className='flex justify-between'>
-              <p className='w-20'>Created_At</p>
+              <p className='w-20'>Created</p>
               <p>{property.created["start"]}</p>
+            </div>}
+            {property.deadline["start"] && <div className='flex justify-between'>
+              <p className='w-20'>Deadline</p>
+              <p>{property.deadline["start"]}</p>
             </div>}
             {property.status && <div className='flex justify-between'>
               <p className='w-20'>Status</p>
@@ -127,8 +144,8 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
             </div>}
           </div>
         </div>
-        <div className='my-5 pl-5 relative'>
-          <input type="checkbox" id="toggle" className="peer hidden" />
+        <div className='mt-4 pl-5 relative'>
+          <input type="checkbox" id="toggle" className="peer hidden" defaultChecked />
           {targetRef.current && <label htmlFor="toggle" className=" cursor-pointer mb-2 font-bold flex ">
             <svg xmlns="http://www.w3.org/2000/svg" className='h-7' viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
             <p className='shiny-text dark:bg-[linear-gradient(120deg,_rgba(255,255,255,1)_35%,_rgba(255,255,255,1)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,0)_50%,_rgba(255,255,255,1)_65%)] bg-[linear-gradient(135deg,_rgba(0,0,0,1)_40%,_rgba(0,0,0,0)_50%,_rgba(0,0,0,1)_60%)] hover:underline'>Related Pages</p>

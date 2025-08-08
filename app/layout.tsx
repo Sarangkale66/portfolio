@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ContextAPI";
@@ -5,6 +6,7 @@ import ThemeProvider from "@/components/ContextAPI";
 import BottomNav from "@/components/BottomNav";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { ThemeProvider1 } from "@/components/ui/theme-provider"
+
 // import { SmoothScrolling } from "@/components/SmoothScrolling";
 
 export const metadata: Metadata = {
@@ -18,10 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+
   return (
-    <html lang="en" data-lenis suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={``}
+        className={`overflow-x-hidden`}
       >
         <ThemeProvider1
           attribute="class"

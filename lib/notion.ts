@@ -118,5 +118,5 @@ export async function getPageProperties(pageId: string) {
   //@ts-expect-error may found error
   const cover = response.cover?.type === 'external' ? response.cover.external.url : response.cover?.type === 'file' ? response.cover.file.url : null;
   //@ts-expect-error may found error
-  return { icon, cover, properties: response.properties, status: response.properties.Status.status.name, created: response.properties["created "].date, color: response.properties.Status.status.color };
+  return { icon, cover, properties: response.properties, status: response.properties.Status.status.name, created: response.properties["created "].date, color: response.properties.Status.status.color, deadline: response.properties["Deadline"].date };
 }

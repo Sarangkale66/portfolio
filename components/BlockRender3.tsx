@@ -9,10 +9,9 @@ import type {
 } from '@notionhq/client/build/src/api-endpoints'
 import LoadingImage from './ImageLoading'
 import { Terminal } from "./magicui/terminal"
-import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark, coldarkDark, prism, holiTheme, base16AteliersulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export interface BlockRendererProps {
   block: BlockObjectResponse | PartialBlockObjectResponse
@@ -98,9 +97,16 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
     case 'code':
       return (
         <Terminal key={id} className="rounded overflow-x-auto text-sm font-mono my-3 whitespace-pre-wrap !h-fit">
-          <SyntaxHighlighter language={block.code.language} style={oneDark} >
-            {block.code.rich_text.map(rt => rt.plain_text).join('')}
-          </SyntaxHighlighter>
+          <div className='dark:hidden'>
+            <SyntaxHighlighter language={block.code.language} style={oneLight} >
+              {block.code.rich_text.map(rt => rt.plain_text).join('')}
+            </SyntaxHighlighter>
+          </div>
+          <div className='dark:block hidden'>
+            <SyntaxHighlighter language={block.code.language} style={oneDark} >
+              {block.code.rich_text.map(rt => rt.plain_text).join('')}
+            </SyntaxHighlighter>
+          </div>
         </Terminal>
       )
 
