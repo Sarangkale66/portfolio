@@ -109,8 +109,8 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
             </div>
             {property.headline && <div
               style={{ backgroundImage: `url(${property.cover})` }}
-              className={`playwrite-head text-5xl h-30 w-full text-center relative bg-cover bg-center bg-no-repeat rounded-sm`}>
-              <h1 className='absolute top-1/3 left-10 text-white mix-blend-difference'>{property.headline}</h1>
+              className={` text-3xl md:text-5xl uppercase font-extrabold h-30 w-full relative bg-cover bg-center bg-no-repeat rounded-sm pl-8 py-8`}>
+              <h1 className='text-white mix-blend-difference'>{property.headline}</h1>
             </div>}
             <Render recordMap={recordMap} />
             {<Print targetRef={targetRef} headerRef={headerRef} iconRef={iconRef} />}

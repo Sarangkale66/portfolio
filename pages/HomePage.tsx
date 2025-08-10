@@ -51,9 +51,9 @@ export default function HomePage() {
             />
           </div>
           <div className="next-section w-full h-full text-black bg-white grid grid-cols-30 grid-rows-3 gap-0">
-            <div className="row-span-3 grid grid-rows-subgrid border-1 border-zinc-400"></div>
+            <div className="row-span-3 grid grid-rows-subgrid "></div>
             <div className="row-span-3 grid grid-rows-11 col-span-28">
-              <div className="md:row-span-2 flex items-center justify-center gap-2 text-md md:text-xl font-semibold tracking-wider border-1 border-zinc-400">WE WORK WITH THE WORLDS TOP BRANDS</div>
+              <div className="md:row-span-2 flex items-center justify-center gap-2 text-sm md:text-xl tracking-wider border-1 border-zinc-400"><p className="inter-para">WE WORK WITH THE WORLDS TOP BRANDS</p></div>
               <div className="grid grid-cols-2 md:grid-rows-1 md:grid-cols-6 row-span-3">
                 <div className="border-1 border-zinc-400">01</div>
                 <div className="border-1 border-zinc-400">02</div>
