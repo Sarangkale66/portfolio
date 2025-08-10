@@ -5,7 +5,7 @@ import {
   Mail,
   Cog,
   Contact,
-  Rss
+  Rss,
 } from "lucide-react"
 
 import { ExpandedTabs } from "./ui/expanded-tabs"

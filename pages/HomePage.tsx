@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useEffect, useRef } from "react";
 import CurvedLoop from "@/components/reactbits/TextAnimations/CurvedLoop/CurvedLoop";
+import { Trophy } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -50,42 +51,40 @@ export default function HomePage() {
               className="text-8xl z-50 w-full"
             />
           </div>
-          <div className="next-section w-full h-full text-black bg-white grid grid-cols-30 grid-rows-3 gap-0">
-            <div className="row-span-3 grid grid-rows-subgrid "></div>
+          <div className="next-section w-full h-full text-black bg-white grid grid-cols-30 grid-rows-3 gap-0 ">
+            <div className="row-span-3 grid grid-rows-subgrid border-1 border-zinc-950"></div>
             <div className="row-span-3 grid grid-rows-11 col-span-28">
-              <div className="md:row-span-2 flex items-center justify-center gap-2 text-sm md:text-xl tracking-wider border-1 border-zinc-400"><p className="inter-para">WE WORK WITH THE WORLDS TOP BRANDS</p></div>
-              <div className="grid grid-cols-2 md:grid-rows-1 md:grid-cols-6 row-span-3">
-                <div className="border-1 border-zinc-400">01</div>
-                <div className="border-1 border-zinc-400">02</div>
-                <div className="border-1 border-zinc-400">03</div>
-                <div className="border-1 border-zinc-400">04</div>
-                <div className="border-1 border-zinc-400">05</div>
-                <div className="border-1 border-zinc-400">06</div>
+              <div className="md:row-span-2 flex items-center justify-center gap-2 text-[10px] md:text-xl tracking-widest border-1"><p className="inter-para">ACTIVITIES <Trophy className="inline-block" /> WINNINGS</p></div>
+              <div className="grid grid-cols-2 md:grid-rows-1 md:grid-cols-6 row-span-3 ">
+                <div className="border-1 border-l-0 border-zinc-950"></div>
+                <div className="border-1 border-l-0 border-zinc-950"></div>
+                <div className="border-1 border-l-0 border-zinc-950"></div>
+                <div className="border-1 border-l-0 border-zinc-950"></div>
+                <div className="border-1 border-l-0 border-zinc-950"></div>
+                <div className="border-1 border-l-0 border-r-0 border-zinc-950"></div>
               </div>
-              <div className=" border-1 border-zinc-400 row-span-7 md:row-span-6 flex flex-col md:flex-row md:items-center">
-                <div className="h-[30%] md:w-[50%] flex items-center justify-center text-2xl px-10 font-bold">
+              <div className="row-span-7 md:row-span-6 border-b-1 border-zinc-950 flex flex-col md:flex-row md:items-center">
+                <div className="h-[30%] md:w-[50%] flex items-center justify-center text-2xl px-3 md:px-10 font-bold">
                   <p className="md:text-5xl">The video Infrastructure for your app</p>
                 </div>
-                <div className="h-full md:w-1/2 px-10 flex md:items-center">Mux solves the hard problems software teams face when building video, from  catalogs to AI-generated video platforms and anything in between. Developers use Mux to launch video features in minutes, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis aspernatur possimus fuga excepturi. Provident laboriosam quam architecto minima, veniam deserunt. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, ipsum!</div>
+                <div className="h-full md:w-1/2 px-3 md:px-10 flex md:items-center">Mux solves the hard problems software teams face when building video, from  catalogs to AI-generated video platforms and anything in between. Developers use Mux to launch video features in minutes, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis aspernatur possimus fuga excepturi. Provident laboriosam quam architecto minima, veniam deserunt. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, ipsum!</div>
               </div>
             </div>
-            <div className="bg-white row-span-3 grid grid-rows-subgrid border-1 border-zinc-400"></div>
+            <div className="bg-white row-span-3 grid grid-rows-subgrid border-1 border-zinc-950"></div>
           </div>
           <div className="next-section w-full h-full text-black bg-white grid grid-cols-30 grid-rows-3 gap-0">
             <div className="row-span-3 grid grid-rows-subgrid border-1 border-zinc-400"></div>
             <div className="row-span-3 grid grid-rows-11 col-span-28">
-              <div className="grid grid-cols-3 md:grid-rows-1 md:grid-cols-3 row-span-1 text-xl font-bold">
+              <div className="grid grid-cols-3 md:grid-rows-1 md:grid-cols-2 row-span-1 text-sm md:text-xl font-bold">
                 <div className="border-1 border-zinc-400 flex justify-center items-center">PROJECT</div>
                 <div className="border-1 border-zinc-400 flex justify-center items-center">SKILLS</div>
-                <div className="border-1 border-zinc-400 flex justify-center items-center">WINNINGS</div>
               </div>
-              <div className=" border-1 border-zinc-400 row-span-9 md:row-span-6 flex flex-col md:flex-row md:items-center">
+              <div className=" border-1 border-zinc-400 row-span-9 md:row-span-9 flex flex-col md:flex-row md:items-center">
                 <div className="h-[30%] md:w-[50%] flex items-center justify-center text-2xl px-10 font-bold">
                   <p className="md:text-5xl">The video Infrastructure for your app</p>
                 </div>
                 <div className="h-full md:w-1/2 px-10 flex md:items-center">Mux solves the hard problems software teams face when building video, from  catalogs to AI-generated video platforms and anything in between. Developers use Mux to launch video features in minutes, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis aspernatur possimus fuga excepturi. Provident laboriosam quam architecto minima, veniam deserunt. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, ipsum!</div>
               </div>
-              <div className="border-1 border-zinc-400"></div>
             </div>
             <div className="bg-white row-span-3 grid grid-rows-subgrid border-1 border-zinc-400"></div>
           </div>
