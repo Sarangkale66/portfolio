@@ -22,7 +22,7 @@ export function BottomNav() {
 
   return (
     <div className="flex items-center justify-center fixed bottom-3 left-1/2 transform -translate-x-1/2 z-50">
-      <ExpandedTabs tabs={tabs} />
+      <ExpandedTabs tabs={tabs as any} />
     </div>
   )
 }

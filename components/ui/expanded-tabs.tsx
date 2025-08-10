@@ -21,10 +21,8 @@ interface Separator {
   icon?: never
 }
 
-type TabItem = Tab | Separator
-
 interface ExpandedTabsProps {
-  tabs: TabItem[]
+  tabs: [(Tab | Separator)]
   className?: string
   activeColor?: string
   onChange?: (index: number | null) => void
@@ -69,9 +67,11 @@ export function ExpandedTabs({
   })
 
   const handleSelect = (index: number) => {
-    setSelected(index)
-    onChange?.(index)
-    router.push(tabs[index].path?.toLowerCase());
+    const tab = tabs[index];
+    if ("type" in tab) return;
+    setSelected(index);
+    onChange?.(index);
+    if (tab.path) router.push(tab.path.toLowerCase());
   }
 
   const Separator = () => (
@@ -100,7 +100,7 @@ export function ExpandedTabs({
             animate="animate"
             custom={selected === index}
             onClick={() => handleSelect(index)}
-            transition={transition}
+            transition={transition as any}
             className={cn(
               "relative flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300",
               selected === index
@@ -116,7 +116,7 @@ export function ExpandedTabs({
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  transition={transition}
+                  transition={transition as any}
                   className="overflow-hidden"
                 >
                   {tab.title}
