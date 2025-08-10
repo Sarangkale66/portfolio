@@ -33,7 +33,7 @@ export default function RootLayout({
         >
           <ThemeProvider>
             <SmoothCursor />
-            <BottomNav />
+            {/* <BottomNav /> */}
             {children}
             {/* <LoadingPage /> */}
           </ThemeProvider>
