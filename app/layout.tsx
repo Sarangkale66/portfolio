@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/ContextAPI";
 // import LoadingPage from "@/components/LoadingPage";
-import BottomNav from "@/components/BottomNav";
+import { BottomNav } from "@/components/BottomNav";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { ThemeProvider1 } from "@/components/ui/theme-provider"
 
@@ -33,9 +33,9 @@ export default function RootLayout({
         >
           <ThemeProvider>
             <SmoothCursor />
+            <BottomNav />
             {children}
             {/* <LoadingPage /> */}
-            {/* <BottomNav /> */}
           </ThemeProvider>
         </ThemeProvider1>
       </body>

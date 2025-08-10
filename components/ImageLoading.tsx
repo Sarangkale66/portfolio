@@ -34,7 +34,7 @@ const LoadingImage: React.FC<LoadingImageProps> = ({ src, alt, width, height, cl
         </div>
       )}
       {!flag && <Zoom>
-        <Image
+        <img
           src={src}
           alt={alt}
           width={width}

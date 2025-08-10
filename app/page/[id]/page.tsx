@@ -29,12 +29,13 @@ interface PropertyTypes {
   status: string;
   color: string;
   deadline: { start: string };
+  headline: string;
 }
 
 export default function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [recordMap, setRecordMap] = useState<(BlockObjectResponse | PartialBlockObjectResponse)[]>([])
-  const [property, setProperty] = useState<PropertyTypes>({ cover: "", properties: {}, icon: "", created: { start: "" }, status: "", color: "", deadline: { start: "" } });
+  const [property, setProperty] = useState<PropertyTypes>({ cover: "", properties: {}, icon: "", created: { start: "" }, status: "", color: "", deadline: { start: "" }, headline: "" });
   const [loading, setLoading] = useState(true);
   const targetRef: RefObject<null | HTMLDivElement> = useRef(null);
   const headerRef: RefObject<null | HTMLDivElement> = useRef(null);
@@ -46,7 +47,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         setLoading(true)
         const properties = await getPageProperties(id);
         const data = await getPageContent(id);
-        console.log(properties);
+        console.log(properties.headline);
         setProperty(properties);
         setRecordMap(data);
       } catch (err) {
@@ -70,7 +71,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
         {loading ? (
           <div className='md:flex w-[100%] h-full md:justify-center relative'>
             <div role="status" className=" animate-pulse h-full w-[100%] md:w-[100%] py-15 px-9 md:py-8 md:px-9">
-              <div className='w-full z-50 fixed fixed left-[88%] sm:left-[63%] lg:left-[78%]'>
+              <div className='w-full z-50 fixed left-[88%] sm:left-[63%] lg:left-[78%]'>
                 <ThemeToggleButton />
               </div>
               <div className="h-10 md:h-13 w-[80%] md:mt-5 rounded-sm dark:bg-gray-700 bg-gray-300 mb-9"></div>
@@ -102,10 +103,15 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
               <div className="h-3 rounded-full dark:bg-gray-700 bg-gray-300 md:max-w-[360px]"></div>
               <span className="sr-only">Loading...</span>
             </div>
-          </div>) : (<div className="px-4 lg:px-10 py-10 bg-white dark:bg-[#191919] text-zinc-900 dark:text-white relative" >
+          </div>) : (<div className="px-4 lg:px-10 py-15 bg-white dark:bg-[#191919] text-zinc-900 dark:text-white relative" >
             <div className='w-fit rounded-sm z-50 fixed left-[88%] sm:left-[63%] lg:left-[78%] bg-zinc-300 dark:bg-zinc-800'>
               <ThemeToggleButton />
             </div>
+            {property.headline && <div
+              style={{ backgroundImage: `url(${property.cover})` }}
+              className={`playwrite-head text-5xl h-30 w-full text-center relative bg-cover bg-center bg-no-repeat rounded-sm`}>
+              <h1 className='absolute top-1/3 left-10 text-white mix-blend-difference'>{property.headline}</h1>
+            </div>}
             <Render recordMap={recordMap} />
             {<Print targetRef={targetRef} headerRef={headerRef} iconRef={iconRef} />}
           </div>)
