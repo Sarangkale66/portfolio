@@ -16,6 +16,7 @@ const notion = new Client({
 });
 
 const notionXClient = new NotionAPI()
+const databaseId = process.env.NOTION_PROJECTS_DATABASE_ID;
 
 /**
  * Fetches a full Notion recordMap using notion-client (unofficial API)
@@ -85,16 +86,19 @@ export async function getPageContent(
   return blocks.results;
 }
 
+
 /**
  * Queries a database (projects)
  */
 export async function getProjects(): Promise<
   {
-    id: string;
-    title: string;
+    id: string
+    title: string
+    icon: string | null
+    cover: string | null
+    properties: any
   }[]
 > {
-  const databaseId = process.env.NOTION_PROJECTS_DATABASE_ID;
   if (!databaseId) {
     throw new Error("NOTION_PROJECTS_DATABASE_ID is not defined.");
   }
@@ -104,12 +108,18 @@ export async function getProjects(): Promise<
     sorts: [{ timestamp: "created_time", direction: "ascending" }],
   });
 
-
-  return response.results.map((page) => ({
-    id: page.id, //@ts-expect-error may found error
-    title: page.properties.Title?.title?.[0]?.plain_text || 'Untitled',
+  return response.results.map((page: any) => ({
+    id: page.id,
+    title: page.properties?.Title?.title?.[0]?.plain_text || "Untitled",
+    icon: page.icon?.type === 'emoji' ? page.icon.emoji : page.icon?.type === 'external' ? page.icon.external.url : page.icon?.type === 'file' ? page.icon.file.url : null,
+    cover:
+      page.cover?.external?.url ||
+      page.cover?.file?.url ||
+      null,
+    properties: page.properties
   }));
 }
+
 
 export async function getPageProperties(pageId: string) {
   const response = await notion.pages.retrieve({ page_id: pageId });
@@ -120,3 +130,26 @@ export async function getPageProperties(pageId: string) {
   //@ts-expect-error may found error
   return { icon, cover, properties: response.properties, status: response.properties.Status.status.name, created: response.properties["created "].date, color: response.properties.Status.status.color, deadline: response.properties["Deadline"].date, headline: response.properties["Title"].title[0].plain_text };
 }
+
+
+// export default async function handler() {
+//   console.log(databaseId);
+//   const page = await notion.pages.retrieve({ page_id: "20de8629-53f8-808c-bc0b-cbea2515e3c7" });
+
+
+//   const blocks = await notion.blocks.children.list({ //@ts-expect-error may found error
+//     block_id: databaseId,
+//     page_size: 100
+//   });
+
+//   // 3. Combine everything
+//   const response = {//@ts-expect-error may found error
+//     title: page.properties?.Name?.title?.[0]?.plain_text || "Untitled",//@ts-expect-error may found error
+//     icon: page.icon?.type === "emoji" ? page.icon.emoji : page.icon?.external?.url || null,//@ts-expect-error may found error
+//     cover: page.cover?.external?.url || page.cover?.file?.url || null,//@ts-expect-error may found error
+//     properties: page.properties || {},
+//     blocks: blocks.results
+//   };
+
+//   return response;
+// }

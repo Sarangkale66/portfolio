@@ -57,23 +57,23 @@ const BlockRenderer: React.FC<BlockRendererProps> = ({ block }) => {
       return <p key={id} className="inter-para my-4 text-md leading-relaxed">{renderRichText(block.paragraph.rich_text)}</p>
 
     case 'heading_1':
-      return <h1 key={id} className="text-4xl font-extrabold my-6">{renderRichText(block.heading_1.rich_text)}</h1>
+      return <h1 key={id} className="inter-para text-4xl font-extrabold my-6">{renderRichText(block.heading_1.rich_text)}</h1>
 
     case 'heading_2':
-      return <h2 key={id} className="text-3xl font-bold my-5">{renderRichText(block.heading_2.rich_text)}</h2>
+      return <h2 key={id} className="inter-para text-3xl font-bold my-5">{renderRichText(block.heading_2.rich_text)}</h2>
 
     case 'heading_3':
       return <h3 key={id} className="inter-para text-2xl font-semibold my-4 dark:text-gray-300 text-black">{renderRichText(block.heading_3.rich_text)}</h3>
 
     case 'bulleted_list_item':
-      return <li key={id} className="list-disc ml-6 my-2">{renderRichText(block.bulleted_list_item.rich_text)}</li>
+      return <li key={id} className="list-disc ml-6 my-2 inter-para">{renderRichText(block.bulleted_list_item.rich_text)}</li>
 
     case 'numbered_list_item':
-      return <li key={id} className="list-decimal ml-6 my-2">{renderRichText(block.numbered_list_item.rich_text)}</li>
+      return <li key={id} className="list-decimal ml-6 my-2 inter-para">{renderRichText(block.numbered_list_item.rich_text)}</li>
 
     case 'to_do':
       return (
-        <div key={id} className="flex items-start gap-2 my-3">
+        <div key={id} className="flex items-start gap-2 my-3 inter-para">
           <input type="checkbox" checked={block.to_do.checked} readOnly className="accent-blue-600 w-4 h-4 mt-1" />
           <label>{renderRichText(block.to_do.rich_text)}</label>
         </div>

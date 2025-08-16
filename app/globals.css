@@ -114,7 +114,7 @@ html {
   color: white;
 }
 
-#scrollbar1::-webkit-scrollbar {
+.scrollbar1::-webkit-scrollbar {
   display: none;
 }
 

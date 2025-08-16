@@ -68,7 +68,7 @@ function FlipButton({
       whileHover="hover"
       whileTap={{ scale: 0.95 }}
       className={cn(
-        'relative inline-block h-full w-full px-4 py-2 text-xl font-medium cursor-pointer perspective-[1000px] focus:outline-none',
+        'relative inline-block h-full w-full px-4 py-2 text-sm md:text-lg lg:text-xl font-medium cursor-pointer perspective-[1000px] focus:outline-none',
         className,
       )}
       {...props}
@@ -79,7 +79,7 @@ function FlipButton({
         transition={transition}
         className={cn(
           DEFAULT_SPAN_CLASS_NAME,
-          'text-black dark:text-white bg-zinc-50',
+          'text-black bg-zinc-50',
           frontClassName,
         )}
       >
