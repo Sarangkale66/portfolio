@@ -23,10 +23,20 @@ import BorderTopIcon from '@mui/icons-material/BorderTop';
 import UpdateIcon from '@mui/icons-material/Update';
 import { FlipButton } from "@/components/animate-ui/buttons/flip";
 import { useRouter } from "next/navigation";
+import FlowingMenu from "@/components/reactbits/Components/FlowingMenu/FlowingMenu";
+import { Meteors } from "@/components/magicui/meteors";
+
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function HomePage() {
+
+  const demoItems = [
+    { link: '#', text: 'Mojave', image: 'https://picsum.photos/600/400?random=1' },
+    { link: '#', text: 'Sonoma', image: 'https://picsum.photos/600/400?random=2' },
+    { link: '#', text: 'Monterey', image: 'https://picsum.photos/600/400?random=3' },
+    { link: '#', text: 'Sequoia', image: 'https://picsum.photos/600/400?random=4' }
+  ];
 
   const mainRef = useRef(null);
   const boxRefs = useRef<HTMLDivElement[]>([]);
@@ -248,13 +258,14 @@ export default function HomePage() {
               <div className="row-span-7 md:row-span-7 flex flex-col md:flex-row md:items-center">
                 <div className="h-full border-r md:w-1/2 flex
                  items-center justify-center text-2xl font-bold relative overflow-hidden">
+                  <Meteors number={50} className="z-50 bg-zinc-500 mix-blend-multiply" />
                   <div
                     ref={(ref) => {
                       if (!ref) return;
                       box2Refs.current = [...box2Refs.current, ref];
                     }}
                     className="h-full w-full flex justify-center bg-[#282828] absolute left-[-100%] top-0">
-                    <img className="h-full w-[98%] absolute" src="/images/Screenshot_2025-08-16_085156.webp" alt="image1" />
+                    <img className="h-full w-[98%] absolute " src="/images/Screenshot_2025-08-16_085156.webp" alt="image1" />
                   </div>
                   <div
                     ref={(ref) => {
@@ -300,34 +311,35 @@ export default function HomePage() {
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 border-2 border-white bg-green-600 text-white px-1 rounded">LeetCode ACE</p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 border-2 border-white bg-green-600 text-white px-1 rounded">LeetCode ACE</p>
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 bg-white px-1 rounded">BACKEND DOMINATION</p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 bg-white px-1 rounded">BACKEND DOMINATION</p>
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 border-2 border-black bg-yellow-400 text-zinc-800 px-1 rounded">III<sup>rd</sup> UNIVERCITY RANKER</p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 border-2 border-black bg-yellow-400 text-zinc-800 px-1 rounded">III<sup>rd</sup> UNIVERCITY RANKER</p>
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 text-white border-2 border-white bg-blue-900 px-1 rounded">TECHNO WINNER</p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 text-white border-2 border-white bg-blue-900 px-1 rounded">TECHNO WINNER</p>
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 border-white border-2 bg-black text-white px-1 rounded">DIPEX ACHIEVER</p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 border-white border-2 bg-black text-white px-1 rounded">DIPEX ACHIEVER</p>
                   <p ref={(ref) => {
                     if (!ref) return;
                     box1Refs.current = [...box1Refs.current, ref];
-                  }} className="md:text-5xl font-extrabold absolute top-[60%] opacity-0 bg-white px-1 rounded"></p>
+                  }} className="md:text-[4vh] font-extrabold absolute top-[60%] opacity-0 bg-white px-1 rounded"></p>
                 </div>
-                <div className="h-full md:w-1/2 px-3 md:px-10 flex md:items-center relative">
+                <div className="h-full relative overflow-hidden md:w-1/2 px-3 md:px-10 flex md:items-center">
+                  <Meteors number={20} className="bg-black hidden lg:block" />
                   <div ref={(ref) => {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center">
-                    <p className="bg-white w-fit pl-1 rounded-t">
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
                       Solved over 450+ problems on LeetCode, strengthening my problem-solving ability, data structures knowledge, and algorithmic thinking. This consistent practice has helped me develop a structured approach to tackling complex problems, improve speed and accuracy, and prepare effectively for real-world coding challenges and technical interviews.
                     </p>
                   </div>
@@ -335,15 +347,15 @@ export default function HomePage() {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center ">
-                    <p className="bg-white w-fit pl-1 rounded-t">
-                      Completed the Backend Domination course at Sheriyans Coding School, gaining in-depth knowledge of the MERN Stack. Built projects and practiced real-world implementations, strengthening my skills in API design, authentication, database management, and scalable backend architecture. This course not only boosted my backend expertise but also gave me confidence in building full-stack applications efficiently.
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
+                      Completed the Backend Domination course at Sheriyans Coding School, gaining in-depth knowledge of the MERN Stack. Built projects and practiced real-world implementations, strengthening my skills in API design, authentication, database management, and scalable backend architecture. <span className="hidden lg:inline">This course not only boosted my backend expertise but also gave me confidence in building full-stack applications efficiently.</span>
                     </p>
                   </div>
                   <div ref={(ref) => {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center ">
-                    <p className="bg-white w-fit pl-1 rounded-t">
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
                       Achieved 3rd rank at RTMNU University during my 6th semester, reflecting dedication, strong academic performance, and consistent learning discipline. This recognition highlights my ability to balance academics with practical skills and showcases my commitment to continuous growth both in theoretical foundations and hands-on technical expertise.
                     </p>
                   </div>
@@ -351,7 +363,7 @@ export default function HomePage() {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center ">
-                    <p className="bg-white w-fit pl-1 rounded-t">
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
                       Secured 2nd position in the National Level Project Competition – Techno Kiran at Nagpur, Maharashtra. Competing among top innovators, my project was recognized for its uniqueness, real-world impact, and technical excellence. This achievement not only reflects my ability to innovate but also my determination to stand out in highly competitive environments.
                     </p>
                   </div>
@@ -359,7 +371,7 @@ export default function HomePage() {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center ">
-                    <p className="bg-white w-fit pl-1 rounded-t">
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
                       Won 5th position at the State Level Project Competition – DIPEX held in Thane, Mumbai. The event brought together innovative minds from across the state, and earning this recognition highlighted my project’s creativity, technical depth, and ability to address real-world challenges. It further strengthened my passion for developing impactful solutions.
                     </p>
                   </div>
@@ -367,8 +379,8 @@ export default function HomePage() {
                     if (!ref) return;
                     boxRefs.current = [...boxRefs.current, ref];
                   }} className="absolute opacity-0 top-[1%] w-[90%] left-1/18 md:left-0 md:translate-x-1/18 h-full flex items-center ">
-                    <p className="bg-white w-fit pl-1 rounded-t">
-                      An enthusiastic learner in Blockchain and Artificial Intelligence, with a deep interest in exploring cutting-edge technologies that are shaping the future. Actively learning and experimenting with AI-driven solutions and decentralized applications, I aim to merge innovation with practical implementation to create systems that are scalable, intelligent, and future-ready.
+                    <p className=" w-fit pl-1 rounded-t text-[2vh] md:text-[2.5vh]">
+                      An enthusiastic learner in Blockchain and Artificial Intelligence, with a deep interest in exploring cutting-edge technologies that are shaping the future. Actively learning and experimenting with AI-driven solutions and decentralized applications<span className="hidden lg:inline">, I aim to merge innovation with practical implementation to create systems that are scalable, intelligent, and future-ready</span>.
                     </p>
                   </div>
                 </div>
@@ -388,10 +400,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="border border-b-0 row-span-10 flex flex-col md:flex-row md:items-center">
-                <div className="h-[30%] md:h-full border-r md:w-[50%] flex items-center justify-center text-2xl px-3 md:px-10 font-bold">
-                  <p className="md:text-5xl">The video Infrastructure for your app</p>
-                </div>
-                <div className="h-full md:w-1/2 px-3 md:px-10 flex md:items-center">Mux solves the hard problems software teams face when building video, from  catalogs to AI-generated video platforms and anything in between. Developers use Mux to launch video features in minutes, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis aspernatur possimus fuga excepturi. Provident laboriosam quam architecto minima, veniam deserunt. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, ipsum!</div>
+                <FlowingMenu items={demoItems} />
               </div>
             </div>
             <div className="bg-white row-span-3 grid grid-rows-subgrid"></div>
